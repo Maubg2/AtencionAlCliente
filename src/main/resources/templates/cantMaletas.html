@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Modificar</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            /* Reemplaza 'tu_imagen_de_fondo.jpg' con la URL de tu imagen */
+            background-image: url('https://static.vecteezy.com/system/resources/previews/014/031/694/non_2x/black-and-white-icon-business-suitcase-vector.jpg');
+            background-size: cover;
+            background-position: center top;
+            color: #fff;
+        }
+
+        .container {
+            margin-top: 5%;
+        }
+
+        .card {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        label {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+
+	<br><br>
+    <div class="container">
+        <div class="row">
+            <div
+                class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card"><br>
+                <h1 class="text-center">Modificar Cantidad Maletas</h1><br><br>
+                <div class="card-body">
+
+                    <form th:if="${peticion != null}" th:action="@{'/guardarCantMaletas/' + ${peticion.idPeticion}}" method="POST">
+
+                        <label for="cantMaletas">Seleccione la cantidad de maletas a agregar:</label>
+                        <select id="cantMaletas" name="cantMaletas" >
+                            <!-- Opciones del 0 al 6 -->
+                            <option th:each="i : ${#numbers.sequence(1, 6)}" th:value="${i}" th:text="${i}"></option>
+                        </select><br><br>
+
+                        <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+                        
+                        <label>Por cada maleta agregada, el costo sube $50.000</label>
+
+                    </form>
+                    
+                    <script th:if="${mensajeError}">
+                        alert("Debe agregar la misma cantidad que indica el cliente");
+                    </script>
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

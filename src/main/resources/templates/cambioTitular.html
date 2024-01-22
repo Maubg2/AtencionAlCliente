@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+    <title>Cambio de titular</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            /* Reemplaza 'tu_imagen_de_fondo.jpg' con la URL de tu imagen */
+            background-image: url('https://static.vecteezy.com/system/resources/previews/027/575/517/non_2x/sign-reload-refresh-icon-spinning-4-arrows-circle-renewable-update-vector.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+        }
+
+        .container {
+            margin-top: 5%;
+        }
+
+        .card {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        label {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            width: 100%;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #218838;
+        }
+
+    </style>
+<!--  
+<meta charset="utf-8">
+<title>Cambio de titular</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">-->
+</head>
+<body>
+
+	<br>
+	<div class="container">
+		<div class="row">
+			<div
+				class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+				<h1 class="text-center">Cambio de titular</h1>
+				<div class="card-body">
+
+					<form th:if="${peticion != null}" th:action="@{'/guardarCambioTitular/' + ${peticion.idPeticion}}"  method="POST">
+
+						<div class="form-group">
+							<label>Nombre:</label> <input type="text" name="nombreTitular"
+								class="form-control" placeholder="Aquí el nombre del nuevo titular: " required>
+						</div>
+
+						<div class="form-group">
+							<label>Apellido:</label> <input type="text"
+								name="apellidoTitular" class="form-control" placeholder="Aquí el apellido del nuevo titular:" required>
+						</div>
+
+						<div class="box-footer">
+							<button class="btn btn-success" type="submit">Modificar</button>
+						</div>
+
+					</form>
+
+					<!-- Script para mostrar la ventana emergente -->
+					<script th:if="${mensajeError}">
+                        alert("Consulta no válida");
+                    </script>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Menú</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+</head>
+<body>
+	<!--@{'/cancelarReserva/' + ${peticion.idPeticion}}-->
+	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+		<a class="navbar-brand" href="#"> Control de usuarios</a>
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link"
+					th:href="@{/buscar}">Customer</a></li>
+				<li class="nav-item"><a class="nav-link"
+					th:href="@{/listarUsuarios}">Usuario</a></li>
+			</ul>
+		</div>
+	</nav>
+	
+	<br>
+	<div class="container">
+	
+		<div class="row">
+		
+			<div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+				<h1 class="text-center">Menú</h1>
+				<div class="card-body">
+
+					<!-- Mostrar datos del usuario 
+					<div th:if="${usuario != null}">
+						<p>
+							Nombre: <span th:text="${usuario.nombreUsuario}"></span>
+						</p>
+						<p>
+							Apellido: <span th:text="${usuario.apellidoUsuario}"></span>
+						</p>
+					</div>-->
+
+					<div th:if="${reserva != null}">
+						<p>
+							Nombre: <span th:text="${reserva.nombreTitular}"></span>
+						</p>
+						<p>
+							Apellido: <span th:text="${reserva.apellidoTitular}"></span>
+						</p>
+						<p>
+							Cantidad de maletas: <span th:text="${reserva.cantMaletas}"></span>
+						</p>
+						<p>
+							Preferencia de comida: <span
+								th:text="${reserva.preferenciaComida}"></span>
+						</p>
+						<p>
+							Precio reserva: <span th:text="${reserva.precioReserva}"></span>
+						</p>
+					</div>
+					
+					<!-- Mostrar datos del vuelo asociado -->
+					<div th:if="${vuelo != null}">
+						<p>
+							Nombre del vuelo: <span th:text="${vuelo.nombreVuelo}"></span>
+						</p>
+						<p>
+							Fecha de Despegue: <span
+								th:text="${#dates.format(vuelo.fechaDespegue, 'yyyy-MM-dd HH:mm')}"></span>
+						</p>
+						<p>
+							Fecha de Llegada: <span
+								th:text="${#dates.format(vuelo.fechaLlegada, 'yyyy-MM-dd HH:mm')}"></span>
+						</p>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<br>
+
+	<div th:if="${not #lists.isEmpty(peticiones)}">
+		<h3 class="text-center">Peticiones</h3>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Preferencia Comida</th>
+					<th>Cambio Hora Vuelo</th>
+					<th>Cancelar Reserva</th>
+					<th>Agregar Maletas</th>
+					<th>Cambio Titular</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="peticion : ${peticiones}">
+					<td><span th:text="${peticion.preferenciaComida} ?: 'No hay preferencia'"></span><br><br>
+						 <a th:href="@{'/modificar/' + ${peticion.idPeticion}}">
+							 <button type="button" class="btn btn-primary">Modificar</button>
+						 </a>
+					</td>
+					
+					<td><span th:text="${peticion.cambioHoraVuelo} ?: 'No hay preferencia'"></span><br><br>
+						 <a th:href="@{'/cambioHora/' + ${peticion.idPeticion}}">
+						 <button type="button" class="btn btn-primary">Modificar</button>
+						</a>
+					</td>
+					
+					<td><span th:text="${peticion.cancelarReserva} ? 'Sí' : 'No'"></span><br><br>
+						 <a th:href="@{'/cancelarReserva/' + ${peticion.idPeticion}}">
+							<button type="button" class="btn btn-primary">Cancelar</button>
+						</a>
+					</td>
+					
+					<td><span th:text="${peticion.agregarMaletas} "></span><br><br>
+						 <a th:href="@{'/cantMaletas/' + ${peticion.idPeticion}}">
+						 	<button type="button" class="btn btn-primary">Modificar</button>
+						</a>
+					</td>
+					
+					<td><span th:text="${peticion.cambioTitular} ?: 'No hay preferencia'"></span>
+						<span th:text="${peticion.cambioTitularApellido}"></span> <br> <br>
+					 	<a th:href="@{'/cambioTitular/' + ${peticion.idPeticion}}">
+							<button type="button" class="btn btn-primary">Modificar</button>
+						</a>
+					</td>
+					
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+				<br>
+				<h3 class="text-center">Datos adicionales</h3>
+				<div class="card-body">
+
+					<!-- Mostrar datos del usuario -->
+					<div th:if="${avion != null}">
+						<p>
+							Marca del avion: <span th:text="${avion.marcaAvion}"></span>
+						</p>
+					</div>
+
+					<!-- Mostrar datos del vuelo asociado -->
+					<div th:if="${aerolinea != null}">
+						<p>
+							Nombre de la aerolinea: <span th:text="${aerolinea.nombreAerolinea}"></span>
+						</p>
+					</div>
+					<div th:if="${equipo != null}">
+						<p>
+							Nombre del piloto: <span th:text="${equipo.nombrePiloto}"></span>
+						</p>
+						<p>
+							Nombre del copiloto: <span th:text="${equipo.nombreCopiloto}"></span>
+						</p>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
